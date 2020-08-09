@@ -1,0 +1,55 @@
+swagger: "2.0"
+info:
+  description: Test API with two endpoints
+  title: Test API
+  version: 1.0.0
+  contact:
+    email: dirom80@mail.ru
+basePath: /api
+schemes:
+  - http
+paths:
+  /increment:
+    get:
+      tags:
+        - number
+      description: Incrementing each digit of the number by default N=1
+      operationId: endpointA
+      parameters:
+        - name: number
+          in: query
+          required: true
+          type: string
+      responses:
+        "200":
+          description: successful operation
+        "400":
+          description: Empty parameter
+  /setIncrementBy:
+    post:
+      tags:
+        - number
+      description: The transmitted number N replaces N "by default"
+      operationId: endpointB
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: incrementBy
+          in: body
+          schema:
+            $ref: '#/definitions/IncrementRequest'
+          required: true
+      responses:
+        "200":
+          description: successfully replaced default N
+        "400":
+          description: Empty parameter
+definitions:
+  IncrementRequest:
+    type: object
+    properties:
+      incrementBy:
+        type: integer
+        format: int32
